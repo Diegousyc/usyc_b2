@@ -46,7 +46,15 @@
 </head>
 <body>
 
-  <h2>CALIFICAIONES - DECIMO PEDAGOGIA</h2>
+  <!-- ✅ Revalidación de sesión -->
+  <script>
+    const alumnoActivo = JSON.parse(localStorage.getItem('alumnoActivo'));
+    if (!alumnoActivo) {
+      window.location.href = "index.html";
+    }
+  </script>
+
+  <h2>CALIFICACIONES - DÉCIMO PEDAGOGÍA</h2>
 
   <div id="contenedor-tabla">
     <table id="tablaCalificaciones">
@@ -60,41 +68,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td contenteditable="true">Estudiante 1</td>
-          <td contenteditable="true">0</td>
-          <td contenteditable="true">0</td>
-          <td contenteditable="true">0</td>
-          <td contenteditable="false">0</td>
-        </tr>
-        <tr>
-          <td contenteditable="true">Estudiante 2</td>
-          <td contenteditable="true">0</td>
-          <td contenteditable="true">0</td>
-          <td contenteditable="true">0</td>
-          <td contenteditable="false">0</td>
-        </tr>
-        <tr>
-          <td contenteditable="true">Estudiante 3</td>
-          <td contenteditable="true">0</td>
-          <td contenteditable="true">0</td>
-          <td contenteditable="true">0</td>
-          <td contenteditable="false">0</td>
-        </tr>
-        <tr>
-          <td contenteditable="true">Estudiante 4</td>
-          <td contenteditable="true">0</td>
-          <td contenteditable="true">0</td>
-          <td contenteditable="true">0</td>
-          <td contenteditable="false">0</td>
-        </tr>
-        <tr>
-          <td contenteditable="true">Estudiante 5</td>
-          <td contenteditable="true">0</td>
-          <td contenteditable="true">0</td>
-          <td contenteditable="true">0</td>
-          <td contenteditable="false">0</td>
-        </tr>
+        <!-- Las filas se cargarán desde localStorage si hay datos -->
       </tbody>
     </table>
   </div>
@@ -103,7 +77,6 @@
   <button class="boton" onclick="guardarTabla()">Guardar</button>
   <button class="boton" onclick="exportarPDF()">Exportar a PDF</button>
   <button class="boton" onclick="window.history.back()">Regresar</button>
-
 
   <script>
     function guardarTabla() {
@@ -120,7 +93,6 @@
         const promedioCell = fila.cells[4];
         promedioCell.innerText = promedio;
 
-        // Estilo según el valor del promedio
         if (promedio < 7) {
           promedioCell.classList.add("promedio-bajo");
         } else {
@@ -172,7 +144,6 @@
             <td contenteditable="true">${est.nota3}</td>
             <td contenteditable="false">${est.promedio}</td>
           `;
-          // Agregar estilo si el promedio es bajo
           if (parseFloat(est.promedio) < 7) {
             fila.children[4].classList.add("promedio-bajo");
           }
