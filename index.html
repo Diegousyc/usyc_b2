@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>USYC METEPEC</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="login-container">
+    <h2>Iniciar sesión</h2>
+    <form onsubmit="return validarLogin()">
+      <input type="text" id="usuario" placeholder="Usuario" required>
+      <input type="password" id="contrasena" placeholder="Contraseña" required>
+      <button type="submit">Entrar</button>
+      <p id="error" class="error"></p>
+    </form>
+
+    <button onclick="window.location.href='registro-alumno.html'">Registrarse como Alumno</button>
+  </div>
+
+  <script>
+    function validarLogin() {
+      const usuario = document.getElementById('usuario').value;
+      const contrasena = document.getElementById('contrasena').value;
+
+      if (usuario === 'admin' && contrasena === '1234') {
+        window.location.href = "bienvenido.html";
+        return false;
+      }
+
+      // Validar si es alumno registrado (guardado en localStorage)
+      const alumnos = JSON.parse(localStorage.getItem('alumnos') || '[]');
+      const alumno = alumnos.find(a => a.usuario === usuario && a.contrasena === contrasena);
+      if (alumno) {
+        localStorage.setItem('alumnoActivo', JSON.stringify(alumno));
+        window.location.href = "vista-alumno.html";
+        return false;
+      }
+
+      document.getElementById('error').textContent = 'Usuario o contraseña incorrectos.';
+      return false;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tabla de Calificaciones - Pedagogía</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    table {
+      width: 80%;
+      margin: auto;
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid #aaa;
+      padding: 10px;
+      text-align: center;
+    }
+    td[contenteditable="true"] {
+      background-color: #ffffcc;
+    }
+    .boton {
+      margin: 10px auto;
+      display: block;
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .boton:hover {
+      background-color: #45a049;
+    }
+    h2 {
+      text-align: center;
+    }
+    .promedio-bajo {
+      color: red;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>CALIFICACIONES - OCTAVO PEDAGOGÍA</h2>
+
+  <div id="contenedor-tabla">
+    <table id="tablaCalificaciones">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Calificación 1</th>
+          <th>Calificación 2</th>
+          <th>Calificación 3</th>
+          <th>Promedio</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td contenteditable="true">Estudiante 1</td>
+          <td contenteditable="true">0</td>
+          <td contenteditable="true">0</td>
+          <td contenteditable="true">0</td>
+          <td contenteditable="false">0</td>
+        </tr>
+        <tr>
+          <td contenteditable="true">Estudiante 2</td>
+          <td contenteditable="true">0</td>
+          <td contenteditable="true">0</td>
+          <td contenteditable="true">0</td>
+          <td contenteditable="false">0</td>
+        </tr>
+        <tr>
+          <td contenteditable="true">Estudiante 3</td>
+          <td contenteditable="true">0</td>
+          <td contenteditable="true">0</td>
+          <td contenteditable="true">0</td>
+          <td contenteditable="false">0</td>
+        </tr>
+        <tr>
+          <td contenteditable="true">Estudiante 4</td>
+          <td contenteditable="true">0</td>
+          <td contenteditable="true">0</td>
+          <td contenteditable="true">0</td>
+          <td contenteditable="false">0</td>
+        </tr>
+        <tr>
+          <td contenteditable="true">Estudiante 5</td>
+          <td contenteditable="true">0</td>
+          <td contenteditable="true">0</td>
+          <td contenteditable="true">0</td>
+          <td contenteditable="false">0</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <button class="boton" onclick="agregarFila()">Agregar Estudiante</button>
+  <button class="boton" onclick="guardarTabla()">Guardar</button>
+  <button class="boton" onclick="exportarPDF()">Exportar a PDF</button>
+  <button class="boton" onclick="window.history.back()">Regresar</button>
+
+
+  <script>
+    const STORAGE_KEY = 'calificaciones_octavo_pedagogia';
+
+    function guardarTabla() {
+      const tabla = document.getElementById('tablaCalificaciones');
+      const datos = [];
+      for (let i = 1; i < tabla.rows.length; i++) {
+        const fila = tabla.rows[i];
+        const nombre = fila.cells[0].innerText;
+        const nota1 = parseFloat(fila.cells[1].innerText) || 0;
+        const nota2 = parseFloat(fila.cells[2].innerText) || 0;
+        const nota3 = parseFloat(fila.cells[3].innerText) || 0;
+        const promedio = ((nota1 + nota2 + nota3) / 3).toFixed(2);
+
+        const promedioCell = fila.cells[4];
+        promedioCell.innerText = promedio;
+
+        if (promedio < 7) {
+          promedioCell.classList.add("promedio-bajo");
+        } else {
+          promedioCell.classList.remove("promedio-bajo");
+        }
+
+        datos.push({ nombre, nota1, nota2, nota3, promedio });
+      }
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(datos));
+      alert("Calificaciones guardadas.");
+    }
+
+    function agregarFila() {
+      const tabla = document.getElementById('tablaCalificaciones').getElementsByTagName('tbody')[0];
+      const fila = tabla.insertRow();
+      for (let i = 0; i < 5; i++) {
+        const celda = fila.insertCell(i);
+        celda.contentEditable = i < 4 ? "true" : "false";
+        celda.innerText = i === 0 ? "Nuevo Estudiante" : "0";
+      }
+    }
+
+    function exportarPDF() {
+      const tabla = document.getElementById("contenedor-tabla");
+      html2pdf()
+        .set({
+          margin: 10,
+          filename: 'calificaciones_pedagogia.pdf',
+          image: { type: 'jpeg', quality: 0.98 },
+          html2canvas: { scale: 2 },
+          jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        })
+        .from(tabla)
+        .save();
+    }
+
+    window.onload = function () {
+      const datosGuardados = localStorage.getItem(STORAGE_KEY);
+      if (datosGuardados) {
+        const datos = JSON.parse(datosGuardados);
+        const tbody = document.querySelector('#tablaCalificaciones tbody');
+        tbody.innerHTML = '';
+        datos.forEach(est => {
+          const fila = document.createElement('tr');
+          fila.innerHTML = `
+            <td contenteditable="true">${est.nombre}</td>
+            <td contenteditable="true">${est.nota1}</td>
+            <td contenteditable="true">${est.nota2}</td>
+            <td contenteditable="true">${est.nota3}</td>
+            <td contenteditable="false">${est.promedio}</td>
+          `;
+          if (parseFloat(est.promedio) < 7) {
+            fila.children[4].classList.add("promedio-bajo");
+          }
+          tbody.appendChild(fila);
+        });
+      }
+    }
+  </script>
+
+</body>
+</html>

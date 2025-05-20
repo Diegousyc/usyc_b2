@@ -1,0 +1,148 @@
+/* === ESTILOS GENERALES === */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f3f3f3;
+  margin: 0;
+  min-height: 100vh;
+}
+
+/* === LOGIN === */
+.login-container {
+  background-color: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 350px;
+  margin: auto;
+  margin-top: 50px;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+/* === BOTONES GENERALES === */
+button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  color: white;
+}
+
+/* Botón Iniciar Sesión */
+button {
+  background-color: #4CAF50;
+}
+button:hover {
+  background-color: #45a049;
+}
+
+/* Botón Ver Calificaciones */
+.boton-calificaciones {
+  margin-top: 15px;
+  background-color: #210ef5f3;
+}
+.boton-calificaciones:hover {
+  background-color: #0056b3;
+}
+
+/* Botón Salir */
+.boton-salir {
+  margin-top: 10px;
+  background-color: #dc3545;
+}
+.boton-salir:hover {
+  background-color: #a71d2a;
+}
+
+/* === MENSAJE DE ERROR === */
+.error {
+  color: red;
+  font-size: 0.9em;
+  text-align: center;
+  margin-top: 10px;
+}
+
+/* === TÍTULOS GENERALES === */
+.titulo {
+  text-align: center;
+  margin-top: 30px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* === TARJETAS DE LICENCIATURAS === */
+.contenedor-carreras {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  padding: 30px;
+}
+
+.tarjeta {
+  width: 250px;
+  text-decoration: none;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.tarjeta:hover {
+  transform: scale(1.05);
+}
+
+.parte-superior {
+  background-color: #0a1739; /* Azul oscuro */
+  color: white;
+  text-align: center;
+  padding: 30px 10px 20px;
+}
+
+.parte-superior h1 {
+  margin: 0;
+  font-size: 32px;
+}
+
+.parte-superior p {
+  margin: 0;
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+
+.parte-inferior {
+  background-color: #d4af00; /* Amarillo */
+  color: black;
+  font-weight: bold;
+  text-align: left;
+  padding: 15px;
+  font-size: 18px;
+}
+
+/* BOTONES PEDAGOGIA*/
+
+.contenedor-botones {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 30px;
+  gap: 15px;
+}
+
+.contenedor-botones button {
+  width: 220px;
+}
